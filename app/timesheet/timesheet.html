@@ -1,0 +1,55 @@
+<div class="container">
+	<form id="timesheet" name="timesheet" ng-show="inProgress" novalidate>
+		<div class="form-group col-sm-12">
+			<h2 class="text-sm-center">Submit Timesheet</h2>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="email" name="timesheet.email" class="form-control" placeholder="Email: artist@gener8.com" ng-model="timesheet.email" required>
+		</div>
+		<div class="form-group col-sm-6">
+			<input type="text" name="timesheet.time.hours" class="form-control" placeholder="Time: 12 hours" ng-model="timesheet.time.hours">
+		</div>
+		<div class="form-group col-sm-6">
+			<input type="text" name="timesheet.time.minutes" class="form-control" placeholder="15 minutes" ng-model="timesheet.time.minutes" either-or="timesheet.time.hours">
+		</div>
+		<div class="form-group col-sm-12">
+			<textarea name="message" class="form-control" placeholder="Message (optional):" ng-model="timesheet.message"></textarea>
+		</div>
+		<div class="form-group col-sm-12">
+			<span>What type of work is this for?</span>
+		</div>
+		<div class="form-group col-sm-12">
+			<select ng-model="timesheet.worktype" class="form-control" required>
+				<option ng-repeat="item in workitems" value="{{item}}">{{item}}</option>
+			</select>
+		</div>
+
+		<ul>
+		  <li ng-repeat="(key, errors) in timesheet.$error track by $index"> <strong>{{ key }}</strong> errors
+		    <ul>
+		      <li ng-repeat="e in errors">{{ e.$name }} has an error: <strong>{{ key }}</strong>.</li>
+		    </ul>
+		  </li>
+		</ul>
+		<div class="validation-errors">
+		FUCK
+			<div ng-messages="timesheet.email.$error">
+				<div ng-messages-include="timesheet/error-messages.html"></div>
+			</div>
+			<div ng-messages="timesheet.time.minutes.$error">
+				<div ng-messages-include="timesheet/error-messages.html"></div>
+			</div>
+		</div>
+
+		<div class="form-group col-sm-12">
+			<button type="button" class="btn btn-primary pull-sm-left" ng-click="clearTimesheet()">Clear</button>
+			<button type="button" class="btn btn-primary pull-sm-right" ng-click="nextStep()">Next</button>
+		</div>
+	</form>
+
+	<!-- <div id="timesheet-submitted" ng-show="!inProgress">
+		<span>Thank you {{timesheet.email}}</span>
+		<span>You have logged {{timesheet.time}}</span>
+		<button type="button" class="btn btn-primary center-block" ng-click="restart()">Start Again</button>
+	</div> -->
+</div>
